@@ -1,0 +1,220 @@
+===============================
+ 0. WIPING DATABASE
+===============================
+TRUNCATE TABLE
+TRUNCATE TABLE
+TRUNCATE TABLE
+TRUNCATE TABLE
+TRUNCATE TABLE
+Database wiped, IDs reset to 1.
+
+===============================
+ 1. CREATE CHIT GROUP
+===============================
+  PASS: Create chit group (HTTP 200)
+Group ID: 1
+
+===============================
+ 2. ADD 10 MEMBERS
+===============================
+  PASS: Add member Amma (HTTP 200)
+  PASS: Add member Ravi (HTTP 200)
+  PASS: Add member Sunita (HTTP 200)
+  PASS: Add member Bharath (HTTP 200)
+  PASS: Add member Meena (HTTP 200)
+  PASS: Add member Kiran (HTTP 200)
+  PASS: Add member Priya (HTTP 200)
+  PASS: Add member Arjun (HTTP 200)
+  PASS: Add member Deepa (HTTP 200)
+  PASS: Add member Suresh (HTTP 200)
+Member IDs: 1 2 3 4 5 6 7 8 9 10
+
+===============================
+ 3. RUNNING FULL CYCLE
+===============================
+
+--- Payments for Month 1 ---
+  PASS: Payment member 1 month 1 (HTTP 200)
+  PASS: Payment member 2 month 1 (HTTP 200)
+  PASS: Payment member 3 month 1 (HTTP 200)
+  PASS: Payment member 4 month 1 (HTTP 200)
+  PASS: Payment member 5 month 1 (HTTP 200)
+  PASS: Payment member 6 month 1 (HTTP 200)
+  PASS: Payment member 7 month 1 (HTTP 200)
+  PASS: Payment member 8 month 1 (HTTP 200)
+  PASS: Payment member 9 month 1 (HTTP 200)
+  PASS: Payment member 10 month 1 (HTTP 200)
+
+Auction - Month 1 | Winner: Amma | Bid: Rs.30000 | DoubleChit: false
+  PASS: Auction month 1 winner Amma (HTTP 200)
+
+--- Payments for Month 2 ---
+  PASS: Payment member 1 month 2 (HTTP 200)
+  PASS: Payment member 2 month 2 (HTTP 200)
+  PASS: Payment member 3 month 2 (HTTP 200)
+  PASS: Payment member 4 month 2 (HTTP 200)
+  PASS: Payment member 5 month 2 (HTTP 200)
+  PASS: Payment member 6 month 2 (HTTP 200)
+  PASS: Payment member 7 month 2 (HTTP 200)
+  PASS: Payment member 8 month 2 (HTTP 200)
+  PASS: Payment member 9 month 2 (HTTP 200)
+  PASS: Payment member 10 month 2 (HTTP 200)
+
+Owner Month trigger - Month 2
+  PASS: Owner month trigger month 2 (HTTP 200)
+
+--- Payments for Month 3 ---
+  PASS: Payment member 1 month 3 (HTTP 200)
+  PASS: Payment member 2 month 3 (HTTP 200)
+  PASS: Payment member 3 month 3 (HTTP 200)
+  PASS: Payment member 4 month 3 (HTTP 200)
+  PASS: Payment member 5 month 3 (HTTP 200)
+  PASS: Payment member 6 month 3 (HTTP 200)
+  PASS: Payment member 7 month 3 (HTTP 200)
+  PASS: Payment member 8 month 3 (HTTP 200)
+  PASS: Payment member 9 month 3 (HTTP 200)
+  PASS: Payment member 10 month 3 (HTTP 200)
+
+Auction - Month 3 | Winner: Sunita | Bid: Rs.20000 | DoubleChit: false
+  PASS: Auction month 3 winner Sunita (HTTP 200)
+
+*** DOUBLE CHIT TEST - Month 3, second winner ***
+
+Auction - Month 3 | Winner: Bharath | Bid: Rs.15000 | DoubleChit: true
+  PASS: Auction month 3 winner Bharath (HTTP 200)
+
+--- Payments for Month 4 ---
+  PASS: Payment member 1 month 4 (HTTP 200)
+  PASS: Payment member 2 month 4 (HTTP 200)
+  PASS: Payment member 3 month 4 (HTTP 200)
+  PASS: Payment member 4 month 4 (HTTP 200)
+  PASS: Payment member 5 month 4 (HTTP 200)
+  PASS: Payment member 6 month 4 (HTTP 200)
+  PASS: Payment member 7 month 4 (HTTP 200)
+  PASS: Payment member 8 month 4 (HTTP 200)
+  PASS: Payment member 9 month 4 (HTTP 200)
+  PASS: Payment member 10 month 4 (HTTP 200)
+
+Auction - Month 4 | Winner: Meena | Bid: Rs.35000 | DoubleChit: false
+  PASS: Auction month 4 winner Meena (HTTP 200)
+
+--- Payments for Month 5 ---
+  PASS: Payment member 1 month 5 (HTTP 200)
+  PASS: Payment member 2 month 5 (HTTP 200)
+  PASS: Payment member 3 month 5 (HTTP 200)
+  PASS: Payment member 4 month 5 (HTTP 200)
+  PASS: Payment member 5 month 5 (HTTP 200)
+  PASS: Payment member 6 month 5 (HTTP 200)
+  PASS: Payment member 7 month 5 (HTTP 200)
+  PASS: Payment member 8 month 5 (HTTP 200)
+  PASS: Payment member 9 month 5 (HTTP 200)
+  PASS: Payment member 10 month 5 (HTTP 200)
+
+Auction - Month 5 | Winner: Kiran | Bid: Rs.28000 | DoubleChit: false
+  PASS: Auction month 5 winner Kiran (HTTP 200)
+
+--- Payments for Month 6 ---
+  PASS: Payment member 1 month 6 (HTTP 200)
+  PASS: Payment member 2 month 6 (HTTP 200)
+  PASS: Payment member 3 month 6 (HTTP 200)
+  PASS: Payment member 4 month 6 (HTTP 200)
+  PASS: Payment member 5 month 6 (HTTP 200)
+  PASS: Payment member 6 month 6 (HTTP 200)
+  PASS: Payment member 7 month 6 (HTTP 200)
+  PASS: Payment member 8 month 6 (HTTP 200)
+  PASS: Payment member 9 month 6 (HTTP 200)
+  PASS: Payment member 10 month 6 (HTTP 200)
+
+Auction - Month 6 | Winner: Priya | Bid: Rs.22000 | DoubleChit: false
+  PASS: Auction month 6 winner Priya (HTTP 200)
+
+*** DOUBLE CHIT TEST - Month 6, second winner ***
+
+Auction - Month 6 | Winner: Arjun | Bid: Rs.18000 | DoubleChit: true
+  PASS: Auction month 6 winner Arjun (HTTP 200)
+
+--- Payments for Month 7 ---
+  PASS: Payment member 1 month 7 (HTTP 200)
+  PASS: Payment member 2 month 7 (HTTP 200)
+  PASS: Payment member 3 month 7 (HTTP 200)
+  PASS: Payment member 4 month 7 (HTTP 200)
+  PASS: Payment member 5 month 7 (HTTP 200)
+  PASS: Payment member 6 month 7 (HTTP 200)
+  PASS: Payment member 7 month 7 (HTTP 200)
+  PASS: Payment member 8 month 7 (HTTP 200)
+  PASS: Payment member 9 month 7 (HTTP 200)
+  PASS: Payment member 10 month 7 (HTTP 200)
+
+Auction - Month 7 | Winner: Deepa | Bid: Rs.40000 | DoubleChit: false
+  PASS: Auction month 7 winner Deepa (HTTP 200)
+
+--- Payments for Month 8 ---
+  PASS: Payment member 1 month 8 (HTTP 200)
+  PASS: Payment member 2 month 8 (HTTP 200)
+  PASS: Payment member 3 month 8 (HTTP 200)
+  PASS: Payment member 4 month 8 (HTTP 200)
+  PASS: Payment member 5 month 8 (HTTP 200)
+  PASS: Payment member 6 month 8 (HTTP 200)
+  PASS: Payment member 7 month 8 (HTTP 200)
+  PASS: Payment member 8 month 8 (HTTP 200)
+  PASS: Payment member 9 month 8 (HTTP 200)
+  PASS: Payment member 10 month 8 (HTTP 200)
+
+Auction - Month 8 | Winner: Suresh | Bid: Rs.10000 | DoubleChit: false
+  PASS: Auction month 8 winner Suresh (HTTP 200)
+
+===============================
+ 4. EDGE CASE TESTS (tonight's fixes)
+===============================
+
+--- Should FAIL: double chit flagged without an existing first winner (month 9) ---
+
+Auction - Month 9 | Winner: Amma (invalid double) | Bid: Rs.30000 | DoubleChit: true
+  FAIL: Auction month 9 winner Amma (invalid double) (expected 400, got 500)
+        Response: {"timestamp":"2026-06-21T18:18:14.252+00:00","status":500,"error":"Internal Server Error","path":"/api/auctions/record"}
+
+--- Should FAIL: duplicate payment for same member/month ---
+  FAIL: Duplicate payment (should fail) (expected 400, got 500)
+        Response: {"timestamp":"2026-06-21T18:18:14.268+00:00","status":500,"error":"Internal Server Error","path":"/api/payments/record"}
+
+===============================
+ 5. UNMARK PAYMENT TEST
+===============================
+Unmarking payment for member 1, month 1...
+  PASS: Unmark payment member 1 month 1 (HTTP 204)
+Re-recording it so totals stay consistent for dashboard checks...
+  PASS: Re-record payment after unmark (HTTP 200)
+
+--- Payments for Month 9 ---
+  PASS: Payment member 1 month 9 (HTTP 200)
+  PASS: Payment member 2 month 9 (HTTP 200)
+  PASS: Payment member 3 month 9 (HTTP 200)
+  PASS: Payment member 4 month 9 (HTTP 200)
+  PASS: Payment member 5 month 9 (HTTP 200)
+  PASS: Payment member 6 month 9 (HTTP 200)
+  PASS: Payment member 7 month 9 (HTTP 200)
+  PASS: Payment member 8 month 9 (HTTP 200)
+  PASS: Payment member 9 month 9 (HTTP 200)
+  PASS: Payment member 10 month 9 (HTTP 200)
+
+Auction - Month 9 | Winner: Ravi | Bid: Rs.25000 | DoubleChit: false
+  PASS: Auction month 9 winner Ravi (HTTP 200)
+
+===============================
+ 6. DASHBOARD CHECK
+===============================
+  PASS: Get dashboard (HTTP 200)
+Dashboard: {"chitGroupName":"Lakshmi Chit","totalMembers":10,"monthlyContribution":10000.00,"totalChitAmount":100000.00,"currentMonth":9,"totalCollectedSoFar":900000.00,"membersWhoWonAuction":10,"membersYetToWin":0}
+
+===============================
+ 7. SETTLEMENT
+===============================
+  PASS: Settle group (HTTP 200)
+Settlement: [{"id":1,"chitGroup":{"id":1,"chitName":"Lakshmi Chit","totalMembers":10,"monthlyContribution":10000.00,"totalChitAmount":100000.00,"startDate":"2026-01-01","ownerBalance":143000.00,"status":"COMPLETED"},"member":{"id":1,"name":"Amma","phone":"9999999999","address":"Bangalore","chitGroup":{"id":1,"chitName":"Lakshmi Chit","totalMembers":10,"monthlyContribution":10000.00,"totalChitAmount":100000.00,"startDate":"2026-01-01","ownerBalance":143000.00,"status":"COMPLETED"}},"dividendAmount":14300.00,"settledDate":"2026-06-21"},{"id":2,"chitGroup":{"id":1,"chitName":"Lakshmi Chit","totalMembers":10,"monthlyContribution":10000.00,"totalChitAmount":100000.00,"startDate":"2026-01-01","ownerBalance":143000.00,"status":"COMPLETED"},"member":{"id":2,"name":"Ravi","phone":"9999999999","address":"Bangalore","chitGroup":{"id":1,"chitName":"Lakshmi Chit","totalMembers":10,"monthlyContribution":10000.00,"totalChitAmount":100000.00,"startDate":"2026-01-01","ownerBalance":143000.00,"status":"COMPLETED"}},"dividendAmount":14300.00,"settledDate":"2026-06-21"},{"id":3,"chitGroup":{"id":1,"chitName":"Lakshmi Chit","totalMembers":10,"monthlyContribution":10000.00,"totalChitAmount":100000.00,"startDate":"2026-01-01","ownerBalance":143000.00,"status":"COMPLETED"},"member":{"id":3,"name":"Sunita","phone":"9999999999","address":"Bangalore","chitGroup":{"id":1,"chitName":"Lakshmi Chit","totalMembers":10,"monthlyContribution":10000.00,"totalChitAmount":100000.00,"startDate":"2026-01-01","ownerBalance":143000.00,"status":"COMPLETED"}},"dividendAmount":14300.00,"settledDate":"2026-06-21"},{"id":4,"chitGroup":{"id":1,"chitName":"Lakshmi Chit","totalMembers":10,"monthlyContribution":10000.00,"totalChitAmount":100000.00,"startDate":"2026-01-01","ownerBalance":143000.00,"status":"COMPLETED"},"member":{"id":4,"name":"Bharath","phone":"9999999999","address":"Bangalore","chitGroup":{"id":1,"chitName":"Lakshmi Chit","totalMembers":10,"monthlyContribution":10000.00,"totalChitAmount":100000.00,"startDate":"2026-01-01","ownerBalance":143000.00,"status":"COMPLETED"}},"dividendAmount":14300.00,"settledDate":"2026-06-21"},{"id":5,"chitGroup":{"id":1,"chitName":"Lakshmi Chit","totalMembers":10,"monthlyContribution":10000.00,"totalChitAmount":100000.00,"startDate":"2026-01-01","ownerBalance":143000.00,"status":"COMPLETED"},"member":{"id":5,"name":"Meena","phone":"9999999999","address":"Bangalore","chitGroup":{"id":1,"chitName":"Lakshmi Chit","totalMembers":10,"monthlyContribution":10000.00,"totalChitAmount":100000.00,"startDate":"2026-01-01","ownerBalance":143000.00,"status":"COMPLETED"}},"dividendAmount":14300.00,"settledDate":"2026-06-21"},{"id":6,"chitGroup":{"id":1,"chitName":"Lakshmi Chit","totalMembers":10,"monthlyContribution":10000.00,"totalChitAmount":100000.00,"startDate":"2026-01-01","ownerBalance":143000.00,"status":"COMPLETED"},"member":{"id":6,"name":"Kiran","phone":"9999999999","address":"Bangalore","chitGroup":{"id":1,"chitName":"Lakshmi Chit","totalMembers":10,"monthlyContribution":10000.00,"totalChitAmount":100000.00,"startDate":"2026-01-01","ownerBalance":143000.00,"status":"COMPLETED"}},"dividendAmount":14300.00,"settledDate":"2026-06-21"},{"id":7,"chitGroup":{"id":1,"chitName":"Lakshmi Chit","totalMembers":10,"monthlyContribution":10000.00,"totalChitAmount":100000.00,"startDate":"2026-01-01","ownerBalance":143000.00,"status":"COMPLETED"},"member":{"id":7,"name":"Priya","phone":"9999999999","address":"Bangalore","chitGroup":{"id":1,"chitName":"Lakshmi Chit","totalMembers":10,"monthlyContribution":10000.00,"totalChitAmount":100000.00,"startDate":"2026-01-01","ownerBalance":143000.00,"status":"COMPLETED"}},"dividendAmount":14300.00,"settledDate":"2026-06-21"},{"id":8,"chitGroup":{"id":1,"chitName":"Lakshmi Chit","totalMembers":10,"monthlyContribution":10000.00,"totalChitAmount":100000.00,"startDate":"2026-01-01","ownerBalance":143000.00,"status":"COMPLETED"},"member":{"id":8,"name":"Arjun","phone":"9999999999","address":"Bangalore","chitGroup":{"id":1,"chitName":"Lakshmi Chit","totalMembers":10,"monthlyContribution":10000.00,"totalChitAmount":100000.00,"startDate":"2026-01-01","ownerBalance":143000.00,"status":"COMPLETED"}},"dividendAmount":14300.00,"settledDate":"2026-06-21"},{"id":9,"chitGroup":{"id":1,"chitName":"Lakshmi Chit","totalMembers":10,"monthlyContribution":10000.00,"totalChitAmount":100000.00,"startDate":"2026-01-01","ownerBalance":143000.00,"status":"COMPLETED"},"member":{"id":9,"name":"Deepa","phone":"9999999999","address":"Bangalore","chitGroup":{"id":1,"chitName":"Lakshmi Chit","totalMembers":10,"monthlyContribution":10000.00,"totalChitAmount":100000.00,"startDate":"2026-01-01","ownerBalance":143000.00,"status":"COMPLETED"}},"dividendAmount":14300.00,"settledDate":"2026-06-21"},{"id":10,"chitGroup":{"id":1,"chitName":"Lakshmi Chit","totalMembers":10,"monthlyContribution":10000.00,"totalChitAmount":100000.00,"startDate":"2026-01-01","ownerBalance":143000.00,"status":"COMPLETED"},"member":{"id":10,"name":"Suresh","phone":"9999999999","address":"Bangalore","chitGroup":{"id":1,"chitName":"Lakshmi Chit","totalMembers":10,"monthlyContribution":10000.00,"totalChitAmount":100000.00,"startDate":"2026-01-01","ownerBalance":143000.00,"status":"COMPLETED"}},"dividendAmount":14300.00,"settledDate":"2026-06-21"}]
+
+===============================
+ TEST SUMMARY
+===============================
+PASS: 116
+FAIL: 2
+RESULT: SOME CHECKS FAILED - review output above
