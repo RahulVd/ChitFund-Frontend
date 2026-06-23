@@ -51,3 +51,4 @@ export const unmarkOwnerPayment = (chitGroupId, monthNumber) =>
   API.delete(`/owner-payments/group/${chitGroupId}/month/${monthNumber}`);
 export const getOwnerPaymentsByGroup = (chitGroupId) =>
   API.get(`/owner-payments/group/${chitGroupId}`);
+export default API;

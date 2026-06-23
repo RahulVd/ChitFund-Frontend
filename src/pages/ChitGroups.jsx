@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getAllChitGroups } from '../services/api';
+import API, { getAllChitGroups } from '../services/api';
 
 function ChitGroups({ setSelectedGroup }) {
   const [groups, setGroups] = useState([]);
@@ -28,32 +28,27 @@ function ChitGroups({ setSelectedGroup }) {
   };
 
   const handleCreate = () => {
-    if (!chitName || !totalMembers || !monthlyContribution || !startDate) {
-      return setMessage('All fields are required');
-    }
-    const totalChitAmount = parseInt(totalMembers) * parseFloat(monthlyContribution);
-    fetch('http://localhost:8080/api/chits', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        chitName,
-        totalMembers: parseInt(totalMembers),
-        monthlyContribution: parseFloat(monthlyContribution),
-        totalChitAmount,
-        startDate,
-        status: 'ACTIVE'
-      })
+  if (!chitName || !totalMembers || !monthlyContribution || !startDate) {
+    return setMessage('All fields are required');
+  }
+  const totalChitAmount = parseInt(totalMembers) * parseFloat(monthlyContribution);
+  API.post('/chits', {
+    chitName,
+    totalMembers: parseInt(totalMembers),
+    monthlyContribution: parseFloat(monthlyContribution),
+    totalChitAmount,
+    startDate,
+    status: 'ACTIVE'
+  })
+    .then(() => {
+      setMessage('Group created!');
+      setShowForm(false);
+      setChitName(''); setTotalMembers('');
+      setMonthlyContribution(''); setStartDate('');
+      fetchGroups();
     })
-      .then(res => res.json())
-      .then(() => {
-        setMessage('Group created!');
-        setShowForm(false);
-        setChitName(''); setTotalMembers('');
-        setMonthlyContribution(''); setStartDate('');
-        fetchGroups();
-      })
-      .catch(() => setMessage('Error creating group'));
-  };
+    .catch(() => setMessage('Error creating group'));
+};
 
   return (
     <div>
