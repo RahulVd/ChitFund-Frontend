@@ -27,7 +27,8 @@ const [isDoubleChit, setIsDoubleChit] = useState(false);
   getSettlements(CHIT_GROUP_ID).then(res => setSettlements(res.data.length > 0 ? res.data : null));
 };
 
-  useEffect(() => {
+// eslint-disable-next-line react-hooks/exhaustive-deps
+useEffect(() => {
     fetchData();
   }, [CHIT_GROUP_ID]);
 

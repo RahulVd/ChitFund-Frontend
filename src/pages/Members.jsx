@@ -11,7 +11,8 @@ function Members({ selectedGroup }) {
   const [editingMember, setEditingMember] = useState(null);
   const CHIT_GROUP_ID = selectedGroup?.id;
 
-  useEffect(() => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+useEffect(() => {
     if (!CHIT_GROUP_ID) return;
     fetchMembers();
   }, [CHIT_GROUP_ID]);
