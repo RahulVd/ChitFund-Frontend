@@ -47,7 +47,7 @@ function Auctions({ selectedGroup }) {
       winnerId: parseInt(winnerId),
       monthNumber: parseInt(monthNumber),
       bidAmount: parseFloat(bidAmount),
-      isDoubleChit: isDoubleChit
+    doubleChit: isDoubleChit   // 👈 renamed key, value unchanged
     })
       .then(() => {
         setMessage('Auction recorded successfully!');
@@ -82,7 +82,7 @@ function Auctions({ selectedGroup }) {
       .catch(err => setOwnerMessage(err.response?.data?.message || 'Error triggering owner month'));
   };
 
-  const auctionsByMonth = auctions.reduce((acc, auction) => {
+ const auctionsByMonth = auctions.reduce((acc, auction) => {
     const key = auction.monthNumber;
     if (!acc[key]) acc[key] = [];
     acc[key].push(auction);
@@ -98,6 +98,9 @@ function Auctions({ selectedGroup }) {
   const existingWinnerForTypedMonth = monthNumber
     ? (auctionsByMonth[parseInt(monthNumber)] || []).length === 1
     : false;
+
+  const wonMemberIds = new Set(auctions.map(a => a.winner.id));
+  const availableMembers = members.filter(m => !wonMemberIds.has(m.id));
 
   return (
     <div>
@@ -144,15 +147,15 @@ function Auctions({ selectedGroup }) {
             <div>
               <label className="text-xs lg:text-sm text-gray-500 mb-1 block">Winner</label>
               <select
-                className="border border-gray-200 rounded-lg p-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[44px]"
-                value={winnerId}
-                onChange={e => setWinnerId(e.target.value)}
-              >
-                <option value="">Select Winner</option>
-                {members.map(m => (
-                  <option key={m.id} value={m.id}>{m.name}</option>
-                ))}
-              </select>
+  className="border border-gray-200 rounded-lg p-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[44px]"
+  value={winnerId}
+  onChange={e => setWinnerId(e.target.value)}
+>
+  <option value="">Select Winner</option>
+  {availableMembers.map(m => (
+    <option key={m.id} value={m.id}>{m.name}</option>
+  ))}
+</select>
             </div>
             <div>
               <label className="text-xs lg:text-sm text-gray-500 mb-1 block">Month</label>
