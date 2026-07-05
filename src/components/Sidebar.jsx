@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
-function Sidebar({ selectedGroup }) {
+function Sidebar({ selectedGroup, onClose }) {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -44,6 +44,7 @@ function Sidebar({ selectedGroup }) {
           <Link
             key={link.to}
             to={link.to}
+            onClick={onClose}
             className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
               location.pathname === link.to
                 ? 'bg-blue-600 text-white'
