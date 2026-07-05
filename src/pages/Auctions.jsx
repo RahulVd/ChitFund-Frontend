@@ -299,8 +299,8 @@ function Auctions({ selectedGroup }) {
                 <th className="text-left p-2 lg:p-4 text-gray-500 font-medium">Type</th>
                 <th className="text-left p-2 lg:p-4 text-gray-500 font-medium">Winner</th>
                 <th className="text-right p-2 lg:p-4 text-gray-500 font-medium">Bid</th>
-                <th className="text-right p-2 lg:p-4 text-gray-500 font-medium hidden sm:table-cell">Received</th>
-                <th className="text-right p-2 lg:p-4 text-gray-500 font-medium hidden lg:table-cell">Balance</th>
+                <th className="text-right p-2 lg:p-4 text-gray-500 font-medium">Received</th>
+                <th className="text-right p-2 lg:p-4 text-gray-500 font-medium">Balance</th>
               </tr>
             </thead>
             <tbody>
@@ -346,12 +346,12 @@ function Auctions({ selectedGroup }) {
                             <div className="bg-yellow-100 text-yellow-600 font-semibold text-xs w-7 h-7 rounded-full flex items-center justify-center">
                               {auction.winner.name.charAt(0)}
                             </div>
-                            <span className="hidden sm:inline text-gray-800">{auction.winner.name}</span>
+                            <span className="text-gray-800">{auction.winner.name}</span>
                           </div>
                         </td>
                         <td className="p-2 lg:p-4 text-right text-gray-700">₹{auction.bidAmount?.toLocaleString()}</td>
-                        <td className="p-2 lg:p-4 text-right text-green-600 font-semibold hidden sm:table-cell">₹{auction.receivedAmount?.toLocaleString()}</td>
-                        <td className="p-2 lg:p-4 text-right text-purple-600 font-medium hidden lg:table-cell">₹{auction.ownerBalanceAfter?.toLocaleString()}</td>
+                        <td className="p-2 lg:p-4 text-right text-green-600 font-semibold">₹{auction.receivedAmount?.toLocaleString()}</td>
+                        <td className="p-2 lg:p-4 text-right text-purple-600 font-medium">₹{auction.ownerBalanceAfter?.toLocaleString()}</td>
                       </tr>
                     ))}
                   </React.Fragment>
