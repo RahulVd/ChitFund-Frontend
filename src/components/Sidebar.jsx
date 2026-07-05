@@ -1,8 +1,9 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 function Sidebar({ selectedGroup }) {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const links = [
     { to: '/', label: 'Chit Groups', icon: '🏠' },
@@ -12,6 +13,11 @@ function Sidebar({ selectedGroup }) {
     { to: '/auctions', label: 'Auctions', icon: '🏆' },
     { to: '/summary', label: 'Summary', icon: '📋' },
   ];
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
+  };
 
   return (
     <div className="fixed top-0 left-0 h-screen w-56 bg-gray-900 text-white flex flex-col">
@@ -52,6 +58,13 @@ function Sidebar({ selectedGroup }) {
 
       {/* Bottom */}
       <div className="p-4 border-t border-gray-700">
+        <button
+          onClick={handleLogout}
+          className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-400 hover:bg-gray-800 hover:text-white transition-colors mb-2"
+        >
+          <span>🚪</span>
+          <span>Logout</span>
+        </button>
         <p className="text-gray-500 text-xs text-center">Chit Fund Manager v1.0</p>
       </div>
     </div>

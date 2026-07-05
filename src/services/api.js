@@ -2,7 +2,7 @@ import axios from 'axios';
 
 
 const API = axios.create({
-baseURL: 'https://chit-fund-management-l6rn.onrender.com/api',
+baseURL: 'http://localhost:8080/api',
 });
 
 // Chit Group
@@ -52,3 +52,22 @@ export const unmarkOwnerPayment = (chitGroupId, monthNumber) =>
 export const getOwnerPaymentsByGroup = (chitGroupId) =>
   API.get(`/owner-payments/group/${chitGroupId}`);
 export default API;
+
+API.interceptors.request.use(config => {
+  const token = localStorage.getItem('token');
+  if (token) config.headers.Authorization = `Bearer ${token}`;
+  return config;
+});
+
+API.interceptors.response.use(
+  res => res,
+  err => {
+    if (err.response?.status === 401) {
+      localStorage.removeItem('token');
+      window.location.href = '/login';
+    }
+    return Promise.reject(err);
+  }
+);
+
+export const login = (username, password) => API.post('/auth/login', { username, password });
