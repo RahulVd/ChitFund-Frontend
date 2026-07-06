@@ -3,7 +3,7 @@ import axios from 'axios';
 
 
 const API = axios.create({
-baseURL: import.meta.env.VITE_API_URL || 'https://chit-fund-management-l6rn.onrender.com/api',
+  baseURL: process.env.REACT_APP_API_URL || 'https://chit-fund-management-l6rn.onrender.com/api',
 });
 
 // Chit Group
@@ -72,3 +72,6 @@ API.interceptors.response.use(
 );
 
 export const login = (username, password) => API.post('/auth/login', { username, password });
+
+export const getCompletedMonths = (chitGroupId) =>
+  API.get(`/auctions/chitgroups/${chitGroupId}/completed-months`);

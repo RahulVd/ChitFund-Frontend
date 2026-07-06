@@ -1,22 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { getMembers, recordAuction, getAuctions, getOwnerBalance, triggerOwnerMonth, getOwnerMonths, settleGroup, getSettlements } from '../services/api';
+import { getMembers, getAuctions, getOwnerBalance, triggerOwnerMonth, getOwnerMonths, settleGroup, getSettlements } from '../services/api';
 
 function Auctions({ selectedGroup }) {
   const [members, setMembers] = useState([]);
   const [auctions, setAuctions] = useState([]);
   const [ownerMonths, setOwnerMonths] = useState([]);
   const [ownerBalance, setOwnerBalance] = useState(0);
-  const [winnerId, setWinnerId] = useState('');
-  const [monthNumber, setMonthNumber] = useState('');
-  const [bidAmount, setBidAmount] = useState('');
   const [ownerMonthNumber, setOwnerMonthNumber] = useState('');
-  const [message, setMessage] = useState('');
   const [ownerMessage, setOwnerMessage] = useState('');
   const [activeTab, setActiveTab] = useState('auction');
   const [settlements, setSettlements] = useState(null);
   const [settleMessage, setSettleMessage] = useState('');
   const [settling, setSettling] = useState(false);
-  const [isDoubleChit, setIsDoubleChit] = useState(false);
   const CHIT_GROUP_ID = selectedGroup?.id;
 
   const fetchData = () => {
@@ -37,25 +32,6 @@ function Auctions({ selectedGroup }) {
       <p className="text-gray-400">Please select a chit group first.</p>
     </div>
   );
-
-  const handleRecord = () => {
-    if (!winnerId || !monthNumber || !bidAmount) {
-      return setMessage('All fields are required');
-    }
-    recordAuction({
-      chitGroupId: CHIT_GROUP_ID,
-      winnerId: parseInt(winnerId),
-      monthNumber: parseInt(monthNumber),
-      bidAmount: parseFloat(bidAmount),
-    doubleChit: isDoubleChit   // 👈 renamed key, value unchanged
-    })
-      .then(() => {
-        setMessage('Auction recorded successfully!');
-        setWinnerId(''); setMonthNumber(''); setBidAmount(''); setIsDoubleChit(false);
-        fetchData();
-      })
-      .catch(err => setMessage(err.response?.data?.message || 'Error recording auction'));
-  };
 
   const handleSettle = () => {
     setSettling(true);
@@ -82,7 +58,7 @@ function Auctions({ selectedGroup }) {
       .catch(err => setOwnerMessage(err.response?.data?.message || 'Error triggering owner month'));
   };
 
- const auctionsByMonth = auctions.reduce((acc, auction) => {
+  const auctionsByMonth = auctions.reduce((acc, auction) => {
     const key = auction.monthNumber;
     if (!acc[key]) acc[key] = [];
     acc[key].push(auction);
@@ -94,13 +70,6 @@ function Auctions({ selectedGroup }) {
     ...ownerMonths.map(o => o.monthNumber)
   ]);
   const sortedMonths = [...allMonths].sort((a, b) => a - b);
-
-  const existingWinnerForTypedMonth = monthNumber
-    ? (auctionsByMonth[parseInt(monthNumber)] || []).length === 1
-    : false;
-
-  const wonMemberIds = new Set(auctions.map(a => a.winner.id));
-  const availableMembers = members.filter(m => !wonMemberIds.has(m.id));
 
   return (
     <div>
@@ -115,13 +84,13 @@ function Auctions({ selectedGroup }) {
         <p className="text-2xl lg:text-3xl font-bold text-purple-600">₹{ownerBalance?.toLocaleString()}</p>
       </div>
 
-      {/* Tabs - Scrollable on mobile */}
+      {/* Tabs */}
       <div className="flex gap-2 mb-4 lg:mb-6 overflow-x-auto pb-2">
         <button
           onClick={() => setActiveTab('auction')}
           className={`px-4 lg:px-5 py-2 rounded-lg text-xs lg:text-sm font-medium whitespace-nowrap transition-colors ${activeTab === 'auction' ? 'bg-blue-600 text-white' : 'bg-white text-gray-600 border border-gray-200'}`}
         >
-          🏆 Record Auction
+          🏆 Auction Winners
         </button>
         <button
           onClick={() => setActiveTab('owner')}
@@ -139,69 +108,12 @@ function Auctions({ selectedGroup }) {
         )}
       </div>
 
-      {/* Auction Form */}
+      {/* Auction tab is now read-only — no form, just a note pointing at the history table below */}
       {activeTab === 'auction' && (
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 lg:p-6 mb-4 lg:mb-6">
-          <h3 className="font-semibold text-gray-700 mb-4 text-sm lg:text-base">Record Auction Winner</h3>
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-3 lg:gap-4">
-            <div>
-              <label className="text-xs lg:text-sm text-gray-500 mb-1 block">Winner</label>
-              <select
-  className="border border-gray-200 rounded-lg p-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[44px]"
-  value={winnerId}
-  onChange={e => setWinnerId(e.target.value)}
->
-  <option value="">Select Winner</option>
-  {availableMembers.map(m => (
-    <option key={m.id} value={m.id}>{m.name}</option>
-  ))}
-</select>
-            </div>
-            <div>
-              <label className="text-xs lg:text-sm text-gray-500 mb-1 block">Month</label>
-              <input
-                className="border border-gray-200 rounded-lg p-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[44px]"
-                placeholder="e.g. 1"
-                type="number"
-                value={monthNumber}
-                onChange={e => setMonthNumber(e.target.value)}
-              />
-            </div>
-            <div>
-              <label className="text-xs lg:text-sm text-gray-500 mb-1 block">Bid (₹)</label>
-              <input
-                className="border border-gray-200 rounded-lg p-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[44px]"
-                placeholder="e.g. 20000"
-                type="number"
-                value={bidAmount}
-                onChange={e => setBidAmount(e.target.value)}
-              />
-            </div>
-            <div className="flex flex-col justify-end pb-0 lg:pb-2">
-              <label className={`flex items-center gap-2 text-xs lg:text-sm cursor-pointer ${existingWinnerForTypedMonth ? 'text-gray-700' : 'text-gray-300'}`}>
-                <input
-                  type="checkbox"
-                  checked={isDoubleChit}
-                  disabled={!existingWinnerForTypedMonth}
-                  onChange={e => setIsDoubleChit(e.target.checked)}
-                  className="w-4 h-4 rounded accent-green-600 cursor-pointer"
-                />
-                <span>⚡ Double</span>
-              </label>
-              {!existingWinnerForTypedMonth && monthNumber && (
-                <span className="text-xs text-gray-400 mt-1">No winner yet</span>
-              )}
-            </div>
-          </div>
-          {message && (
-            <p className={`mt-3 text-xs lg:text-sm ${message.includes('success') ? 'text-green-600' : 'text-red-500'}`}>
-              {message}
-            </p>
-          )}
-          <button onClick={handleRecord}
-            className="mt-4 w-full lg:w-auto bg-blue-600 text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 active:bg-blue-800 min-h-[44px]">
-            Record Auction
-          </button>
+          <p className="text-xs lg:text-sm text-gray-400">
+            This is a read-only view of recorded auction winners. See the history table below.
+          </p>
         </div>
       )}
 
@@ -286,7 +198,7 @@ function Auctions({ selectedGroup }) {
         </div>
       )}
 
-      {/* Timeline Table - Scrollable on mobile */}
+      {/* Timeline Table */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
         <div className="p-3 lg:p-4 border-b border-gray-100">
           <h3 className="font-semibold text-gray-700 text-sm lg:text-base">Auction History</h3>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import Dashboard from './pages/Dashboard';
@@ -8,12 +8,34 @@ import Auctions from './pages/Auctions';
 import Summary from './pages/Summary';
 import ChitGroups from './pages/ChitGroups';
 import Login from './pages/Login';
+import CloseMonth from './pages/CloseMonth.jsx';
 import ProtectedRoute from './components/ProtectedRoute';
+import { getChitGroup } from './services/api';
 
 function App() {
-  const [selectedGroup, setSelectedGroup] = useState(null);
+  const [selectedGroup, setSelectedGroupState] = useState(null);
   const [paymentVersion, setPaymentVersion] = useState(0);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  // Wrapper: whenever a group gets selected, also persist its ID.
+  const setSelectedGroup = (group) => {
+    setSelectedGroupState(group);
+    if (group?.id) {
+      localStorage.setItem('selectedGroupId', group.id);
+    } else {
+      localStorage.removeItem('selectedGroupId');
+    }
+  };
+
+  // On first load, try to restore the previously selected group.
+  useEffect(() => {
+    const savedId = localStorage.getItem('selectedGroupId');
+    if (savedId) {
+      getChitGroup(savedId)
+        .then(res => setSelectedGroupState(res.data))
+        .catch(() => localStorage.removeItem('selectedGroupId')); // group may have been deleted
+    }
+  }, []);
 
   const onPaymentChange = () => setPaymentVersion(v => v + 1);
 
@@ -69,6 +91,7 @@ function App() {
                       <Route path="/payments" element={<Payments selectedGroup={selectedGroup} onPaymentChange={onPaymentChange} />} />
                       <Route path="/auctions" element={<Auctions selectedGroup={selectedGroup} />} />
                       <Route path="/summary" element={<Summary selectedGroup={selectedGroup} />} />
+                      <Route path="/close-month" element={<CloseMonth selectedGroup={selectedGroup} />} />
                     </Routes>
                   </div>
                 </div>

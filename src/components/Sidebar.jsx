@@ -7,12 +7,16 @@ function Sidebar({ selectedGroup, onClose }) {
 
   const links = [
     { to: '/', label: 'Chit Groups', icon: '🏠' },
+      { to: '/close-month', label: 'Close Month', icon: '✅' },
+
     { to: '/dashboard', label: 'Dashboard', icon: '📊' },
     { to: '/members', label: 'Members', icon: '👥' },
     { to: '/payments', label: 'Payments', icon: '💰' },
     { to: '/auctions', label: 'Auctions', icon: '🏆' },
     { to: '/summary', label: 'Summary', icon: '📋' },
   ];
+
+  
 
   const handleLogout = () => {
     localStorage.removeItem('token');
