@@ -29,7 +29,7 @@ export const getMonthlySummary = (chitGroupId, monthNumber) => API.get(`/payment
 // Auctions
 export const recordAuction = (data) => API.post('/auctions/record', data);
 export const getAuctions = (chitGroupId) => API.get(`/auctions/group/${chitGroupId}`);
-export const getOwnerBalance = (chitGroupId) => API.get(`/auctions/group/${chitGroupId}/owner-balance`);
+export const getOwnerBalance = (chitGroupId) => API.get(`/auctions/group/${chitGroupId}/chit-group-balance`);
 export const getLastMonthPayout = (chitGroupId) => API.get(`/auctions/group/${chitGroupId}/last-month-payout`);
 
 //owner-month

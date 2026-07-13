@@ -263,7 +263,7 @@ function Auctions({ selectedGroup }) {
                         </td>
                         <td className="p-2 lg:p-4 text-right text-gray-700">₹{auction.bidAmount?.toLocaleString()}</td>
                         <td className="p-2 lg:p-4 text-right text-green-600 font-semibold">₹{auction.receivedAmount?.toLocaleString()}</td>
-                        <td className="p-2 lg:p-4 text-right text-purple-600 font-medium">₹{auction.ownerBalanceAfter?.toLocaleString()}</td>
+                          <td className="p-2 lg:p-4 text-right text-purple-600 font-medium">₹{auction.chitGroupBalanceAfter?.toLocaleString()}</td>
                       </tr>
                     ))}
                   </React.Fragment>
