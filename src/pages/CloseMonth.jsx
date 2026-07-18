@@ -102,45 +102,46 @@ function CloseMonth({ selectedGroup }) {
   };
 
   const handleRecordAuction = () => {
-  if (!winnerId || !bidAmount) {
-    return setAuctionMessage('Select a winner and enter a bid amount');
-  }
+    if (!winnerId || !bidAmount) {
+      return setAuctionMessage('Select a winner and enter a bid amount');
+    }
 
-  const winnerName = availableMembers.find(m => m.id === parseInt(winnerId))?.name || 'this member';
-  const confirmed = window.confirm(
-    `Are you sure? This will record ${winnerName} as the winner for month ${currentMonth} with a bid of ₹${Number(bidAmount).toLocaleString('en-IN')}. This cannot be undone from the UI.`
-  );
-  if (!confirmed) return;
+    const winnerName = availableMembers.find(m => m.id === parseInt(winnerId))?.name || 'this member';
+    const chitLabel = isDoubleChit ? '2nd winner (double chit)' : 'winner';
+    const confirmed = window.confirm(
+      `Are you sure? This will record ${winnerName} as the ${chitLabel} for month ${currentMonth} with a bid of ₹${Number(bidAmount).toLocaleString('en-IN')}. This cannot be undone from the UI.`
+    );
+    if (!confirmed) return;
 
-  recordAuction({
-    chitGroupId: CHIT_GROUP_ID,
-    winnerId: parseInt(winnerId),
-    monthNumber: currentMonth,
-    bidAmount: parseFloat(bidAmount),
-    doubleChit: isDoubleChit,
-  })
-    .then(() => {
-      setAuctionMessage('Auction recorded! Moving to next month.');
-      setWinnerId(''); setBidAmount(''); setIsDoubleChit(false);
-      fetchAll();
+    recordAuction({
+      chitGroupId: CHIT_GROUP_ID,
+      winnerId: parseInt(winnerId),
+      monthNumber: currentMonth,
+      bidAmount: parseFloat(bidAmount),
+      doubleChit: isDoubleChit,
     })
-    .catch(err => setAuctionMessage(err.response?.data?.message || 'Error recording auction'));
-};
+      .then(() => {
+        setAuctionMessage(isDoubleChit ? 'Second winner recorded! Double chit complete.' : 'Auction recorded successfully.');
+        setWinnerId(''); setBidAmount(''); setIsDoubleChit(false);
+        fetchAll();
+      })
+      .catch(err => setAuctionMessage(err.response?.data?.message || 'Error recording auction'));
+  };
 
-const handleTriggerOwnerMonth = () => {
-  const confirmed = window.confirm(
-    `Are you sure? This will mark month ${currentMonth} as the Owner's Month and add ₹${selectedGroup.totalChitAmount?.toLocaleString()} to the owner balance. This cannot be undone from the UI.`
-  );
-  if (!confirmed) return;
+  const handleTriggerOwnerMonth = () => {
+    const confirmed = window.confirm(
+      `Are you sure? This will mark month ${currentMonth} as the Owner's Month and add ₹${selectedGroup.totalChitAmount?.toLocaleString()} to the owner balance. This cannot be undone from the UI.`
+    );
+    if (!confirmed) return;
 
-  triggerOwnerMonth({ chitGroupId: CHIT_GROUP_ID, monthNumber: currentMonth })
-    .then(() => {
-      setAuctionMessage('Owner month triggered! Moving to next month.');
-      setIsOwnerMonth(false);
-      fetchAll();
-    })
-    .catch(err => setAuctionMessage(err.response?.data?.message || 'Error triggering owner month'));
-};
+    triggerOwnerMonth({ chitGroupId: CHIT_GROUP_ID, monthNumber: currentMonth })
+      .then(() => {
+        setAuctionMessage('Owner month triggered! Moving to next month.');
+        setIsOwnerMonth(false);
+        fetchAll();
+      })
+      .catch(err => setAuctionMessage(err.response?.data?.message || 'Error triggering owner month'));
+  };
 
   return (
     <div>
@@ -185,7 +186,7 @@ const handleTriggerOwnerMonth = () => {
       </div>
 
       {/* Step 2: Auction / Owner Month */}
-      {alreadyOwnerMonth || existingAuctionsThisMonth.length >= 1 ? (
+      {alreadyOwnerMonth || existingAuctionsThisMonth.length >= 2 ? (
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 lg:p-6 mb-4 lg:mb-6">
           <h3 className="font-semibold text-gray-700 mb-2 text-sm lg:text-base">
             Step 2 — This month
@@ -193,8 +194,6 @@ const handleTriggerOwnerMonth = () => {
           <p className="text-sm text-gray-500">
             {alreadyOwnerMonth
               ? '👑 Already recorded as an Owner Month.'
-              : existingAuctionsThisMonth.length === 1
-              ? '⚡ First winner recorded — you can record a second (double chit) winner from the Auctions page if needed.'
               : 'Both winners recorded for this month.'}
           </p>
         </div>
@@ -228,7 +227,7 @@ const handleTriggerOwnerMonth = () => {
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 lg:gap-4">
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-3 lg:gap-4">
               <div>
                 <label className="text-xs lg:text-sm text-gray-500 mb-1 block">Winner</label>
                 <select
@@ -252,12 +251,30 @@ const handleTriggerOwnerMonth = () => {
                   onChange={e => setBidAmount(e.target.value)}
                 />
               </div>
+              <div className="flex flex-col justify-end pb-0 lg:pb-2">
+                <label className={`flex items-center gap-2 text-xs lg:text-sm cursor-pointer ${existingAuctionsThisMonth.length === 1 ? 'text-gray-700' : 'text-gray-300'}`}>
+                  <input
+                    type="checkbox"
+                    checked={isDoubleChit}
+                    disabled={existingAuctionsThisMonth.length !== 1}
+                    onChange={e => setIsDoubleChit(e.target.checked)}
+                    className="w-4 h-4 rounded accent-green-600 cursor-pointer"
+                  />
+                  <span>⚡ Double Chit</span>
+                </label>
+                {existingAuctionsThisMonth.length !== 1 && (
+                  <span className="text-xs text-gray-400 mt-1">Enable after first winner</span>
+                )}
+                {existingAuctionsThisMonth.length === 1 && !isDoubleChit && (
+                  <span className="text-xs text-gray-400 mt-1">First winner recorded — check for second winner</span>
+                )}
+              </div>
               <div className="flex items-end">
                 <button
                   onClick={handleRecordAuction}
                   className="w-full bg-blue-600 text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 min-h-[44px]"
                 >
-                  Record Winner
+                  {isDoubleChit ? 'Record 2nd Winner' : 'Record Winner'}
                 </button>
               </div>
             </div>
