@@ -75,3 +75,9 @@ export const login = (username, password) => API.post('/auth/login', { username,
 
 export const getCompletedMonths = (chitGroupId) =>
   API.get(`/auctions/chitgroups/${chitGroupId}/completed-months`);
+
+// Meetings
+export const createMeeting = (data) => API.post('/meetings', data);
+export const getMeetingsByGroup = (chitGroupId) => API.get(`/meetings/group/${chitGroupId}`);
+export const updateMeeting = (id, data) => API.put(`/meetings/${id}`, data);
+export const deleteMeeting = (id) => API.delete(`/meetings/${id}`);

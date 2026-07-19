@@ -9,6 +9,7 @@ import Summary from './pages/Summary';
 import ChitGroups from './pages/ChitGroups';
 import Login from './pages/Login';
 import CloseMonth from './pages/CloseMonth.jsx';
+import Reminders from './pages/Reminders.jsx';
 import ProtectedRoute from './components/ProtectedRoute';
 import { getChitGroup } from './services/api';
 
@@ -92,6 +93,7 @@ function App() {
                       <Route path="/auctions" element={<Auctions selectedGroup={selectedGroup} />} />
                       <Route path="/summary" element={<Summary selectedGroup={selectedGroup} />} />
                       <Route path="/close-month" element={<CloseMonth selectedGroup={selectedGroup} />} />
+                      <Route path="/reminders" element={<Reminders selectedGroup={selectedGroup} />} />
                     </Routes>
                   </div>
                 </div>

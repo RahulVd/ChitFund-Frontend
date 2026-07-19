@@ -12,6 +12,7 @@ function Sidebar({ selectedGroup, onClose }) {
     { to: '/dashboard', label: 'Dashboard', icon: '📊' },
     { to: '/members', label: 'Members', icon: '👥' },
     { to: '/payments', label: 'Payments', icon: '💰' },
+    { to: '/reminders', label: 'Reminders', icon: '📩' },
     { to: '/auctions', label: 'Auctions', icon: '🏆' },
     { to: '/summary', label: 'Summary', icon: '📋' },
   ];
