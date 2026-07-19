@@ -190,7 +190,7 @@ function Reminders({ selectedGroup }) {
       {/* ─── Section 1: Meeting Links ─── */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 lg:p-6 mb-4 lg:mb-6">
         <h3 className="font-semibold text-gray-700 mb-4 text-sm lg:text-base">
-          \uD83D\uDCAC Meeting Links
+          📌 Meeting Links
         </h3>
 
         {/* Form */}
@@ -310,7 +310,7 @@ function Reminders({ selectedGroup }) {
       {/* ─── Section 2: WhatsApp Reminders ─── */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 lg:p-6">
         <h3 className="font-semibold text-gray-700 mb-4 text-sm lg:text-base">
-          \uD83D\uDCF1 WhatsApp Reminders
+          📱 WhatsApp Reminders
         </h3>
 
         {/* Month selector */}
